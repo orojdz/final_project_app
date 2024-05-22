@@ -1,0 +1,1 @@
+// apiKey Edamam api 3f9b9cafdb517ba96a67adacf488f3f9
