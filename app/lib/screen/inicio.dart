@@ -11,22 +11,22 @@ class InicioScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Lets eat!',
+              'Lets cook!',
               style: TextStyle(
                   fontFamily: 'Robot',
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black),
+                  color: Color.fromARGB(255, 233, 130, 50)),
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 30),
             Container(
-                width: 280,
-                height: 280,
+                width: 300,
+                height: 300,
                 child: Image.asset(
                   'images/foodie.png',
                   fit: BoxFit.contain,
                 )),
-            SizedBox(height: 50),
+            SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -39,12 +39,10 @@ class InicioScreen extends StatelessWidget {
               child: Text(
                 'Start',
                 style: TextStyle(
-                  fontSize:
-                      18, // Cambia el tamaño de la fuente del texto del botón
-                  fontFamily: 'Arial', // Cambia la fuente del texto del botón
-                  fontWeight: FontWeight
-                      .bold, // Cambia el peso de la fuente del texto del botón
-                  color: Colors.black, // Cambia el color del texto del botón
+                  fontSize: 25,
+                  fontFamily: 'Arial',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ),
             ),
