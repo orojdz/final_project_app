@@ -15,7 +15,7 @@ class Categories {
     categories.add(Categories(name: 'Breakfast', img: 'images/breakfast.png'));
     categories.add(Categories(name: 'Lunch', img: 'images/lunch.png'));
     categories.add(Categories(name: 'Desserts', img: 'images/dessert.png'));
-    categories.add(Categories(name: 'Dinner', img: 'images/dinner'));
+    categories.add(Categories(name: 'Dinner', img: 'images/dinner.png'));
 
     return categories;
   }
