@@ -33,6 +33,7 @@ flutter:
     - images/lunch.png
     - images/dessert.png
     - images/dinner.png
+    - images/cooking-1.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
