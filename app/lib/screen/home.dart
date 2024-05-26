@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:app/model/categories.dart';
 import 'package:app/model/recipe.dart';
 import 'package:app/data/recipes_data.dart';
+import 'package:app/ui_widgets/recipes_card.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -12,13 +13,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Categories> categories = [];
+  Future<List<Recipe>>? _recipes;
 
   void _getCategories() {
     categories = Categories.getCategories(); // obtiene las categorias del model
   }
 
   // Busca recetas por categoria
-  void _getRecipes(Categories category) async {
+  Future<List<Recipe>> _getRecipes(Categories category) async {
     String cat = category.name.toString();
 
     /* Credenciales de la API */
@@ -29,11 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     try {
       List<Recipe> recipes = await edamamApi.getRecipesByCategory(cat);
-      for (var recipe in recipes) {
-        print('Recipe: ${recipe.label}, URL: ${recipe.url}');
-      }
+      return recipes;
     } catch (e) {
-      print('Error: $e');
+      throw Exception('Failed to load recipes');
     }
   }
 
@@ -79,18 +79,81 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: 12.0),
               ],
             ),
-            Categorias(categories: categories, selectCategory: _getRecipes),
+            Categorias(
+                categories: categories,
+                selectCategory: (category) {
+                  setState(() {
+                    _recipes = _getRecipes(category);
+                  });
+                }),
             Padding(
               padding: const EdgeInsets.only(left: 25.0, top: 20.0),
               child: Text('Recommended',
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600)),
+                      color: Color.fromARGB(255, 186, 51, 13),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold)),
             ),
+            SizedBox(height: 14),
+            RecipesContainerWidget(),
           ],
         ),
       ),
+    );
+  }
+
+  /* Widget que contiene un FutureBuilder que recibe y gestiona la lista de recetas */
+  Container RecipesContainerWidget() {
+    return Container(
+      child: FutureBuilder<List<Recipe>>(
+        future: _recipes,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(
+                child: Text('Sorry, something unexpected happened! :('));
+          } else if (snapshot.hasData) {
+            return _buildRecipeList(snapshot.data!);
+          } else {
+            return Center(
+              child: Column(
+                children: [
+                  Text(
+                    'Tap on a category to search recipes',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  Container(
+                      width: 250,
+                      height: 250,
+                      child: Image.asset(
+                        'images/cooking-1.png',
+                        fit: BoxFit.contain,
+                      ))
+                ],
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  /* Construye la lista de recetas */
+  Widget _buildRecipeList(List<Recipe> recipes) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemCount: recipes.length,
+      itemBuilder: (context, index) {
+        final recipe = recipes[index];
+        return Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: RecipeCard(recipe: recipe),
+        );
+      },
     );
   }
 
