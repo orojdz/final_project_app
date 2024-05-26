@@ -12,10 +12,10 @@ class Categories {
     List<Categories> categories = [];
 
     // Todas las categorias
-    categories.add(Categories(name: 'Breakfast', img: 'images/breakfast.png'));
-    categories.add(Categories(name: 'Lunch', img: 'images/lunch.png'));
-    categories.add(Categories(name: 'Desserts', img: 'images/dessert.png'));
-    categories.add(Categories(name: 'Dinner', img: 'images/dinner.png'));
+    categories.add(Categories(name: 'breakfast', img: 'images/breakfast.png'));
+    categories.add(Categories(name: 'lunch', img: 'images/lunch.png'));
+    categories.add(Categories(name: 'snack', img: 'images/dessert.png'));
+    categories.add(Categories(name: 'dinner', img: 'images/dinner.png'));
 
     return categories;
   }

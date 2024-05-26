@@ -33,7 +33,16 @@ class Categorias extends StatelessWidget {
                 child: Container(
                   width: screenWidth * 0.2,
                   decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 230, 180, 63),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color.fromARGB(255, 240, 206, 178)
+                              .withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 4,
+                          offset: Offset(3, 2),
+                        ),
+                      ],
+                      color: Color.fromARGB(255, 230, 180, 63).withOpacity(0.4),
                       borderRadius: BorderRadius.circular(16)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
