@@ -26,7 +26,7 @@ class InicioScreen extends StatelessWidget {
                   'images/foodie.png',
                   fit: BoxFit.contain,
                 )),
-            SizedBox(height: 30),
+            SizedBox(height: 25),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
