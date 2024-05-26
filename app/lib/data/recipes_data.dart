@@ -20,12 +20,10 @@ class EdamamApi {
       'q': category,
       'app_id': appId,
       'app_key': appKey,
-      'mealType': category,
     };
 
     final url =
         Uri.parse('$baseUrl/search').replace(queryParameters: queryParameters);
-    print('Request URL: $url');
 
     final response = await http.get(url); // petición get recipes
 
@@ -38,5 +36,10 @@ class EdamamApi {
     } else {
       throw Exception('Failed to load recipes from edamam');
     }
+  }
+
+  // Método para busqueda general
+  Future<List<Recipe>> getRecipesByQuery(String query) async {
+    return getRecipesByCategory(query);
   }
 }
