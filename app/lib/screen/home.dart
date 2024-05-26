@@ -15,6 +15,12 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Categories> categories = [];
   Future<List<Recipe>>? _recipes;
 
+  @override
+  void initState() {
+    super.initState();
+    _getCategories();
+  }
+
   void _getCategories() {
     categories = Categories.getCategories(); // obtiene las categorias del model
   }
@@ -31,6 +37,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
     try {
       List<Recipe> recipes = await edamamApi.getRecipesByCategory(cat);
+      return recipes;
+    } catch (e) {
+      throw Exception('Failed to load recipes');
+    }
+  }
+
+  // Busca recetas por el input
+  Future<List<Recipe>> _searchRecipes(String query) async {
+    /* Credenciales de la API */
+    final String apiId = 'cf541eb7';
+    final String apiKey = '43395df6d443797881fe497a0e5d3e74';
+
+    final edamamApi = EdamamApi(appId: apiId, appKey: apiKey);
+
+    try {
+      List<Recipe> recipes = await edamamApi.getRecipesByQuery(query);
       return recipes;
     } catch (e) {
       throw Exception('Failed to load recipes');
@@ -160,13 +182,17 @@ class _HomeScreenState extends State<HomeScreen> {
   /* Input text field para buscar */
   TextField _searchInput() {
     return TextField(
-      decoration: InputDecoration(
-          hintText: 'Search recipes',
-          suffixIcon: Icon(Icons.search),
-          contentPadding: EdgeInsets.all(20),
-          border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-              borderRadius: BorderRadius.circular(30.0))),
-    );
+        decoration: InputDecoration(
+            hintText: 'Search recipes',
+            suffixIcon: Icon(Icons.search),
+            contentPadding: EdgeInsets.all(20),
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(30.0))),
+        onSubmitted: (value) => {
+              setState(() {
+                _recipes = _searchRecipes(value);
+              })
+            });
   }
 }
