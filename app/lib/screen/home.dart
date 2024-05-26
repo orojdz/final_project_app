@@ -131,7 +131,10 @@ class _HomeScreenState extends State<HomeScreen> {
         future: _recipes,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+                child: CircularProgressIndicator(
+              color: Colors.amber,
+            ));
           } else if (snapshot.hasError) {
             return Center(
                 child: Text('Sorry, something unexpected happened! :('));
