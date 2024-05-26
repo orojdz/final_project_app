@@ -57,12 +57,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             Categorias(categories: categories),
+            Padding(
+              padding: const EdgeInsets.only(left: 25.0, top: 20.0),
+              child: Text('Recommended',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600)),
+            ),
           ],
         ),
       ),
     );
   }
 
+  /* Input text field para buscar */
   TextField _searchInput() {
     return TextField(
       decoration: InputDecoration(
@@ -76,6 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+/* CATEGORIAS */
 class Categorias extends StatelessWidget {
   const Categorias({
     super.key,
@@ -90,7 +100,7 @@ class Categorias extends StatelessWidget {
     return Container(
       height: 120,
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(8.0),
         child: ListView.separated(
             separatorBuilder: (context, index) => SizedBox(width: 20),
             // llista de categories
@@ -103,6 +113,29 @@ class Categorias extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Color.fromARGB(255, 230, 180, 63),
                     borderRadius: BorderRadius.circular(16)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: Colors.white, shape: BoxShape.circle),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset(
+                          categories[index].img,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    Text(categories[index].name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: Colors.black)),
+                  ],
+                ),
               );
             })),
       ),
