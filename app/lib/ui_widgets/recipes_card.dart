@@ -10,6 +10,7 @@ class RecipeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
+        color: Color.fromARGB(255, 230, 180, 63),
         elevation: 4.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
@@ -43,9 +44,9 @@ class RecipeCard extends StatelessWidget {
                 child: Text(
                   recipe.label,
                   style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
               ),
             ],
