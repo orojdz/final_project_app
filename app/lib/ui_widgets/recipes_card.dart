@@ -16,7 +16,7 @@ class RecipeCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Container(
-          width: 300,
+          width: 400,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -25,6 +25,7 @@ class RecipeCard extends StatelessWidget {
                 child: Image.network(
                   recipe.image,
                   fit: BoxFit.cover,
+                  width: 400,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
                       height: 200,
@@ -41,12 +42,22 @@ class RecipeCard extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  recipe.label,
-                  style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      recipe.label,
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          overflow: TextOverflow.ellipsis),
+                    ),
+                    Icon(
+                      Icons.favorite_border_outlined,
+                      color: Colors.white,
+                    )
+                  ],
                 ),
               ),
             ],
