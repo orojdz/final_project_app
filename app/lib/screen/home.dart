@@ -1,3 +1,4 @@
+import 'package:app/screen/categorias.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/categories.dart';
 
@@ -12,6 +13,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _getCategories() {
     categories = Categories.getCategories(); // obtiene las categorias del model
+  }
+
+  void _selectCategory(Categories category) {
+    // Acción de buscar por categoria
+    print('Category name: ${category.name}');
   }
 
   @override
@@ -56,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: 12.0),
               ],
             ),
-            Categorias(categories: categories),
+            Categorias(categories: categories, selectCategory: _selectCategory),
             Padding(
               padding: const EdgeInsets.only(left: 25.0, top: 20.0),
               child: Text('Recommended',
@@ -81,64 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
           border: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey),
               borderRadius: BorderRadius.circular(30.0))),
-    );
-  }
-}
-
-/* CATEGORIAS */
-class Categorias extends StatelessWidget {
-  const Categorias({
-    super.key,
-    required this.categories,
-  });
-
-  final List<Categories> categories;
-
-  @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    return Container(
-      height: 120,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView.separated(
-            separatorBuilder: (context, index) => SizedBox(width: 20),
-            // llista de categories
-            itemCount: categories.length,
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.only(left: 20, right: 20),
-            itemBuilder: ((context, index) {
-              return Container(
-                width: screenWidth * 0.2,
-                decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 230, 180, 63),
-                    borderRadius: BorderRadius.circular(16)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          color: Colors.white, shape: BoxShape.circle),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.asset(
-                          categories[index].img,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                    Text(categories[index].name,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                            color: Colors.black)),
-                  ],
-                ),
-              );
-            })),
-      ),
     );
   }
 }
