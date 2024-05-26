@@ -1,6 +1,8 @@
-import 'package:app/screen/categorias.dart';
+import 'package:app/ui_widgets/categorias.dart';
 import 'package:flutter/material.dart';
 import 'package:app/model/categories.dart';
+import 'package:app/model/recipe.dart';
+import 'package:app/data/recipes_data.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -15,9 +17,24 @@ class _HomeScreenState extends State<HomeScreen> {
     categories = Categories.getCategories(); // obtiene las categorias del model
   }
 
-  void _selectCategory(Categories category) {
-    // Acción de buscar por categoria
-    print('Category name: ${category.name}');
+  // Busca recetas por categoria
+  void _getRecipes(Categories category) async {
+    String cat = category.name.toString();
+
+    /* Credenciales de la API */
+    final String apiId = 'cf541eb7';
+    final String apiKey = '43395df6d443797881fe497a0e5d3e74';
+
+    final edamamApi = EdamamApi(appId: apiId, appKey: apiKey);
+
+    try {
+      List<Recipe> recipes = await edamamApi.getRecipesByCategory(cat);
+      for (var recipe in recipes) {
+        print('Recipe: ${recipe.label}, URL: ${recipe.url}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   @override
@@ -62,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: 12.0),
               ],
             ),
-            Categorias(categories: categories, selectCategory: _selectCategory),
+            Categorias(categories: categories, selectCategory: _getRecipes),
             Padding(
               padding: const EdgeInsets.only(left: 25.0, top: 20.0),
               child: Text('Recommended',

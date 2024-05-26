@@ -13,18 +13,30 @@ class EdamamApi {
       required this.appKey,
       this.baseUrl = 'https://api.edamam.com'});
 
+  // Función que recibe un parámetro y devuelve una lista de recetas.
   Future<List<Recipe>> getRecipesByCategory(String category) async {
-    final url =
-        Uri.parse('$baseUrl/search?q=$category&app_id=$appId&app_key=$appKey');
+    // parametros de la URL
+    final queryParameters = {
+      'q': category,
+      'app_id': appId,
+      'app_key': appKey,
+      'mealType': category,
+    };
 
-    final response = await http.get(url);
+    final url =
+        Uri.parse('$baseUrl/search').replace(queryParameters: queryParameters);
+    print('Request URL: $url');
+
+    final response = await http.get(url); // petición get recipes
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
+      // El objetos hits tienen el campo 'recipe'
       final List<dynamic> hits = data['hits'];
+      // Devuelve una lista de recetas
       return hits.map((hit) => Recipe.fromJson(hit['recipe'])).toList();
     } else {
-      throw Exception('Failed to load recipes');
+      throw Exception('Failed to load recipes from edamam');
     }
   }
 }
