@@ -4,6 +4,7 @@ import 'package:app/model/categories.dart';
 import 'package:app/model/recipe.dart';
 import 'package:app/data/recipes_data.dart';
 import 'package:app/ui_widgets/recipes_card.dart';
+import 'package:app/screen/my_recipes.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -58,6 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
       throw Exception('Failed to load recipes');
     }
   }
+
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -120,33 +123,54 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: Color.fromARGB(213, 235, 193, 95),
-        indicatorColor: Color.fromARGB(255, 239, 158, 82),
-        destinations: const <Widget>[
-          NavigationDestination(
-            icon: Icon(
-              Icons.home,
-              color: Colors.white,
-            ),
-            label: 'Home',
+      bottomNavigationBar: navigationBar(),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyRecipes()),
+            );
+          },
+          tooltip: 'Create new',
+          elevation: 0.0,
+          child: const Icon(Icons.edit)),
+    );
+  }
+
+  BottomNavigationBar navigationBar() {
+    return BottomNavigationBar(
+      // indice actual
+      onTap: (value) {
+        setState(() {
+          selectedIndex = value;
+        });
+      },
+      backgroundColor: Color.fromARGB(213, 235, 193, 95),
+      elevation: 0,
+      currentIndex: selectedIndex,
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.home,
+            color: Color.fromARGB(255, 239, 158, 82),
           ),
-          NavigationDestination(
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            label: 'Search',
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.search,
+            color: Color.fromARGB(255, 239, 158, 82),
           ),
-          NavigationDestination(
-            icon: Icon(
-              Icons.cookie,
-              color: Colors.white,
-            ),
-            label: 'My recipes',
+          label: 'Search',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.cookie,
+            color: Color.fromARGB(255, 239, 158, 82),
           ),
-        ],
-      ),
+          label: 'My recipes',
+        ),
+      ],
     );
   }
 
