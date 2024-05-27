@@ -66,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top + 24,
-          bottom: MediaQuery.of(context).padding.bottom + 24,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Color.fromARGB(255, 233, 130, 50)),
               ),
             ),
-            SizedBox(height: 12.0),
+            SizedBox(height: 10.0),
             Padding(
               padding: const EdgeInsets.only(left: 25.0, right: 25.0),
               child: _searchInput(),
@@ -121,6 +120,33 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: NavigationBar(
+        backgroundColor: Color.fromARGB(213, 235, 193, 95),
+        indicatorColor: Color.fromARGB(255, 239, 158, 82),
+        destinations: const <Widget>[
+          NavigationDestination(
+            icon: Icon(
+              Icons.home,
+              color: Colors.white,
+            ),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+            label: 'Search',
+          ),
+          NavigationDestination(
+            icon: Icon(
+              Icons.cookie,
+              color: Colors.white,
+            ),
+            label: 'My recipes',
+          ),
+        ],
+      ),
     );
   }
 
@@ -151,8 +177,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Container(
-                      width: 250,
-                      height: 250,
+                      width: 200,
+                      height: 200,
                       child: Image.asset(
                         'images/cooking-1.png',
                         fit: BoxFit.contain,
