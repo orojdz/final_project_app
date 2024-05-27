@@ -43,3 +43,6 @@ class EdamamApi {
     return getRecipesByCategory(query);
   }
 }
+
+/* Gestión backend firebase */
+class Firebase {}
