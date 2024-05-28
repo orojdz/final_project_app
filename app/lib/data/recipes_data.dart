@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'package:app/model/recipe.dart';
 
@@ -29,7 +30,7 @@ class EdamamApi {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
-      // El objetos hits tienen el campo 'recipe'
+      // Los objetos hits tienen el campo 'recipe'
       final List<dynamic> hits = data['hits'];
       // Devuelve una lista de recetas
       return hits.map((hit) => Recipe.fromJson(hit['recipe'])).toList();
@@ -45,4 +46,30 @@ class EdamamApi {
 }
 
 /* Gestión backend firebase */
-class Firebase {}
+class FirebaseService {
+  final CollectionReference recipedb =
+      FirebaseFirestore.instance.collection('myrecipes');
+
+  // Función future void para añadir nuevas recetas a la collection
+  Future<void> addRecipe(Recipe recipe) {
+    return recipedb.add({
+      'label': recipe.label,
+      'image': recipe.image,
+      'url': recipe.url,
+    });
+  }
+
+  // Devuelve lista de recetas de la collection de Firebase
+  Future<List<Recipe>> getRecipes() async {
+    // objeto que contiene el resultado de la Query GET
+    QuerySnapshot snapshot = await recipedb.get();
+    // lista de los documentos en firebase
+    return snapshot.docs.map((doc) {
+      return Recipe(
+        label: doc['label'], // doc get el valor 'label'
+        image: doc['image'],
+        url: doc['url'],
+      );
+    }).toList();
+  }
+}
