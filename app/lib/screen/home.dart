@@ -5,6 +5,7 @@ import 'package:app/model/recipe.dart';
 import 'package:app/data/recipes_data.dart';
 import 'package:app/ui_widgets/recipes_card.dart';
 import 'package:app/screen/my_recipes.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -30,9 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<List<Recipe>> _getRecipes(Categories category) async {
     String cat = category.name.toString();
 
-    /* Credenciales de la API */
-    final String apiId = 'cf541eb7';
-    final String apiKey = '43395df6d443797881fe497a0e5d3e74';
+    /* Credenciales de la API usando las variables de entorno */
+    final String apiId = dotenv.env['API_ID'].toString();
+    final String apiKey = dotenv.env['API_KEY'].toString();
 
     final edamamApi = EdamamApi(appId: apiId, appKey: apiKey);
 
@@ -46,9 +47,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Busca recetas por el input
   Future<List<Recipe>> _searchRecipes(String query) async {
-    /* Credenciales de la API */
-    final String apiId = 'cf541eb7';
-    final String apiKey = '43395df6d443797881fe497a0e5d3e74';
+    /* Credenciales de la API usando las variables de entorno */
+    final String apiId = dotenv.env['API_ID'].toString();
+    final String apiKey = dotenv.env['API_KEY'].toString();
 
     final edamamApi = EdamamApi(appId: apiId, appKey: apiKey);
 
@@ -107,7 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 categories: categories,
                 selectCategory: (category) {
                   setState(() {
-                    _recipes = _getRecipes(category);
+                    _recipes =
+                        _getRecipes(category); // get recetas por 'Categoria'
                   });
                 }),
             Padding(
