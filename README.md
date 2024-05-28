@@ -44,8 +44,8 @@ Esta aplicación de recetas está diseñada para buscar y crear tus propias rece
 
 ## Modelos 
 
-* **recipes.dart:** Define la estructura de una receta (campos como nombre, ingredientes, etc.).
-* **categories.dart:** Define las categorías de recetas disponibles.
+* **recipes.dart:** Clase Recipe con contructor (name, image, url.) y método para crear instancias Recipe.
+* **categories.dart:** Clase Categories que define un módelo básico para el widget categorias.
 
 ## Widgets Utilizados ⚙️
 
